@@ -1,0 +1,17 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+#stage {
+  background-color: black;
+}
+.space-gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 50, 1) 35%,
+    rgba(65, 0, 68, 1) 100%
+  );
+}
