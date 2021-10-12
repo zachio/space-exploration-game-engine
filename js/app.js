@@ -4,6 +4,7 @@ var app = {
     canvas.config({
       id: 'stage'
     })
+    starField.init()
     app.loop()
   },
   draw(){
