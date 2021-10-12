@@ -8,7 +8,6 @@ var starField = {
     },
     stars: [],
     drawStar(x, y, color, size, transparent) {
-
       let starGradient = canvas.ctx.createRadialGradient(x, y, 0, x, y, size)
       starGradient.addColorStop(0, 'white')
       starGradient.addColorStop(this.gradient.min, 'white')
@@ -39,17 +38,30 @@ var starField = {
       let size = random.between(10, 100)
       let x = random.between(size/2, canvas.ctx.width - size/2)
       let y = random.between(size/2, canvas.ctx.height - size/2)
-      return {
+      let star = {
         x: x,
         y: y,
         color: color,
         transparent: transparent,
         size: size
       }
+      for(let i = 0; i < this.stars.length; i++){
+        let otherStar = this.stars[i]
+        while(this.collision(star, otherStar) < 0) {
+          star.x = random.between(size/2, canvas.ctx.width - size/2)
+          star.y = random.between(size/2, canvas.ctx.height - size/2)
+        }
+      }
+      return star
     },
     init(){
       for(let i = 0; i < random.between(1,10); i++) {
         this.stars.push(this.createStar())
       }
+    },
+    collision(star1, star2){
+      var a = star1.x - star2.x 
+      var b = star1.y - star2.y
+      return Math.sqrt( a*a + b*b ) - (star1.size + star2.size)
     }
 }
