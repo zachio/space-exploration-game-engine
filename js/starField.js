@@ -2,18 +2,18 @@ var starField = {
     draw(){
       for(let i = 0; i < this.stars.length; i++){
         let star = this.stars[i]
-        this.drawStar(star.x, star.y, star.color, star.size)
+        this.drawStar(star.x, star.y, star.color, star.size, star.transparent)
       }
       
     },
     stars: [],
-    drawStar(x, y, color, size) {
+    drawStar(x, y, color, size, transparent) {
 
       let starGradient = canvas.ctx.createRadialGradient(x, y, 0, x, y, size)
       starGradient.addColorStop(0, 'white')
       starGradient.addColorStop(this.gradient.min, 'white')
       starGradient.addColorStop(this.gradient.max, color)
-      starGradient.addColorStop(1, 'transparent')
+      starGradient.addColorStop(1, transparent)
       canvas.circle(x, y, size, starGradient)
     },
     gradient: {
@@ -31,11 +31,20 @@ var starField = {
       if(this.gradient.max < 0.7) this.pulse = true
     },
     createStar(){
+      let r = random.between(0,255)
+      let g = random.between(0, 255)
+      let b = random.between(0, 255)
+      let color = `rgba(${r},${g},${b}, 1)`
+      let transparent = `rgba(${r},${g},${b}, 0)`
+      let size = random.between(10, 100)
+      let x = random.between(size/2, canvas.ctx.width - size/2)
+      let y = random.between(size/2, canvas.ctx.height - size/2)
       return {
-        x: random.between(0, canvas.ctx.width),
-        y: random.between(0, canvas.ctx.height),
-        color: random.pick(['red', 'green', 'orange', 'purple', 'blue', 'cyan', 'yellow', 'magenta', 'violet', 'white']),
-        size: random.between(10, 100)
+        x: x,
+        y: y,
+        color: color,
+        transparent: transparent,
+        size: size
       }
     },
     init(){
