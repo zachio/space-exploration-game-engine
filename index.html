@@ -162,8 +162,8 @@
               <tbody>
                 <tr v-for="(star, index) in stars">
                   <td>{{index + 1}}</td>
-                  <td>random</td>
-                  <td>{{star.color}}</td>
+                  <td class="capitalize">{{star.name}}</td>
+                  <td :style="{color: star.color}">{{star.color}}</td>
                   <td>x: {{star.x}}, y: {{star.y}}</td>
                   <td>text</td>
                 </tr>

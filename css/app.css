@@ -23,9 +23,12 @@ body {
   height: 16px;
   vertical-align: text-bottom;
 }
+.capitalize {
+  text-transform: capitalize;
+}
 
 /*
- * Sidebar
+ * Dashboard Sidebar
  */
 
 .sidebar {

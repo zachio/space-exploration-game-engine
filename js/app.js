@@ -64,8 +64,10 @@ var app = new Vue({
         y: y,
         color: color,
         transparent: transparent,
-        size: size
+        size: size,
+        name: this.starName()
       }
+      // Check for collision and reposition star if needed
       for(let i = 0; i < this.stars.length; i++){
         let otherStar = this.stars[i]
         while(this.collision(star, otherStar) < 0) {
@@ -106,5 +108,17 @@ var app = new Vue({
     erase(){
       this.ctx.clearRect(0, 0, this.ctx.width, this.ctx.height)
     },
+    starName(){
+      let syllables = ['ab',"oc",'ock','bo','ca','at','oz','to','do','cose','bi','lat','hy','gly','hi','li','os','he']
+      let syllableCount = this.randomBetween(3,6)
+      let name = ''
+      for(let i = 0; i < syllableCount; i++) {
+        name += this.randomPick(syllables)
+      }
+      return name
+    },
+    randomPick(list) {
+      return list[Math.floor(Math.random() * list.length)]
+    }
   }
 })
