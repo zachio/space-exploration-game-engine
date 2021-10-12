@@ -48,6 +48,7 @@ var starField = {
       for(let i = 0; i < this.stars.length; i++){
         let otherStar = this.stars[i]
         while(this.collision(star, otherStar) < 0) {
+          console.warn(`Collisoin detected on star ${i}.`)
           star.x = random.between(size/2, canvas.ctx.width - size/2)
           star.y = random.between(size/2, canvas.ctx.height - size/2)
         }
@@ -55,8 +56,9 @@ var starField = {
       return star
     },
     init(){
+      starField.stars = []
       for(let i = 0; i < random.between(1,10); i++) {
-        this.stars.push(this.createStar())
+        starField.stars.push(starField.createStar())
       }
     },
     collision(star1, star2){

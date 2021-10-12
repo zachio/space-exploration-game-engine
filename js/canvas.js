@@ -9,10 +9,12 @@ var canvas = {
     console.log(canvas.ctx)
   },
   resize() {
-    canvas.element.width = window.innerWidth
-    canvas.ctx.width = window.innerWidth
-    canvas.element.height = window.innerHeight
-    canvas.ctx.height = window.innerHeight
+    let width = document.getElementById('right-col').clientWidth - 1.5 * 20 * 2
+    console.log(width)
+    canvas.element.width = width
+    canvas.ctx.width = width
+    canvas.element.height = width
+    canvas.ctx.height = width
   },
   erase(){
     canvas.ctx.clearRect(0, 0, canvas.ctx.width, canvas.ctx.height)
