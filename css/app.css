@@ -26,6 +26,9 @@ body {
 .capitalize {
   text-transform: capitalize;
 }
+.table-hover tbody tr {
+  cursor: pointer;
+}
 
 /*
  * Dashboard Sidebar

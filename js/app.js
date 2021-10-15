@@ -23,7 +23,7 @@ var app = new Vue({
     draw(){
       for(let i = 0; i < this.stars.length; i++){
         let star = this.stars[i]
-        this.drawStar(star.x, star.y, star.color, star.size, star.transparent)
+        this.drawStar(star)
       }
     },
     update(){
@@ -65,7 +65,8 @@ var app = new Vue({
         color: color,
         transparent: transparent,
         size: size,
-        name: this.starName()
+        name: this.starName(),
+        highlight: false
       }
       // Check for collision and reposition star if needed
       for(let i = 0; i < this.stars.length; i++){
@@ -84,19 +85,34 @@ var app = new Vue({
       return Math.sqrt( a*a + b*b ) - (star1.size + star2.size)
     },
     resize() {
-      let width = document.getElementById('right-col').clientWidth - 1.5 * 20 * 2
+      let width = document.getElementById('stage-col').clientWidth - 1.5 * 20 
       this.canvas.width = width
       this.ctx.width = width
       this.canvas.height = width
       this.ctx.height = width
     },
-    drawStar(x, y, color, size, transparent) {
-      let starGradient = this.ctx.createRadialGradient(x, y, 0, x, y, size)
-      starGradient.addColorStop(0, 'white')
-      starGradient.addColorStop(this.gradient.min, 'white')
-      starGradient.addColorStop(this.gradient.max, color)
-      starGradient.addColorStop(1, transparent)
-      this.drawCircle(x, y, size, starGradient)
+    drawStar(star) {   
+      if(star.highlight) {
+        let starGradient = this.ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.size * 2)
+        starGradient.addColorStop(0, 'white')
+        starGradient.addColorStop(this.gradient.min, 'white')
+        starGradient.addColorStop(this.gradient.max, star.color)
+        starGradient.addColorStop(1, star.transparent)
+        this.ctx.lineWidth = 1 * this.gradient.max
+        this.ctx.strokeStyle = 'cyan'
+        this.ctx.beginPath()
+        this.ctx.arc(star.x, star.y, star.size * 2.1, 0, 2 * Math.PI)
+        this.ctx.stroke()
+        this.ctx.closePath()
+        this.drawCircle(star.x, star.y, star.size * 2, starGradient)
+      } else {
+        let starGradient = this.ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.size)
+        starGradient.addColorStop(0, 'white')
+        starGradient.addColorStop(this.gradient.min, 'white')
+        starGradient.addColorStop(this.gradient.max, star.color)
+        starGradient.addColorStop(1, star.transparent)
+        this.drawCircle(star.x, star.y, star.size, starGradient)
+      }
     },
     drawCircle(x, y, size, fill){
       this.ctx.fillStyle = fill
@@ -119,6 +135,9 @@ var app = new Vue({
     },
     randomPick(list) {
       return list[Math.floor(Math.random() * list.length)]
+    },
+    highlightStar(star, bool) {
+      star.highlight = bool
     }
   }
 })
